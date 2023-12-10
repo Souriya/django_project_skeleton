@@ -4,4 +4,5 @@ exclue =
     __pycache__,
     manage.py,
     setting.py,
+    configs/setting.py
     

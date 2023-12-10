@@ -1,0 +1,16 @@
+# specify version of yaml syntax 
+version: "3"
+
+services:
+  django-app: # service name to run the docker file
+    build:
+      context: . # use current directory that running the docker-compose command
+      args:
+        - DEV=true # set DEV tp true for running development env
+    ports:
+      - "8000:8000" # map port 8000 on local machine to port 8000 on the container
+    volumes:
+      - ./django-project:/django-project # map dir of local machine to dir on the container
+    command: # default command to run if not specify in docker-compose
+    >
+      sh -c "python3 manage.py runserver 0.0.0.0:8000"

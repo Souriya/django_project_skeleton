@@ -14,3 +14,28 @@ services:
     command: # default command to run if not specify in docker-compose
     >
       sh -c "python3 manage.py runserver 0.0.0.0:8000"
+    environment:
+      - DB_HOST=db # user database connection as define in below db service
+      - POSTGRES_DB=db_dev
+      - POSTGRES_USER=user_dev
+      - POSTGRES_PASSWORD=Password_dev
+    depends_on:
+      - db
+  
+  db:
+    image: postgres:15.5-bookworm # use postgres 15.5 on Debian 12
+    ports:
+      - "5432:5432"
+    volumes:
+      - dev-db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=db_dev
+      - POSTGRES_USER=user_dev
+      - POSTGRES_PASSWORD=Password_dev
+      - TZ=Asia/Vientiane # set default time zone to UTC +7
+      - PGTZ=Asia/Vientiane # set postgres time zone to UTC +7
+      - POSTGRES_HOST_AUTH_METHOD=trust # allow to connect to db from all hosts
+
+volumes:
+  dev-db-data:
+

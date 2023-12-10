@@ -20,6 +20,19 @@ EXPOSE 8000
 # Set valuable to be use to determine Development or Production
 ARG DEV=false
 
+# Update system
+RUN apt-get update
+RUN apt-get install -y apt-utils
+RUN apt-get upgrade -y
+RUN apt-get autoremove
+
+# Set timezone
+ENV TZ=Asia/Vientiane
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
+
+# Install psycopg3 dependencies
+RUN apt-get install -y libpq5 build-essential
+
 # Create python virtual env and upgrade pip
 RUN python3 -m venv /venv
 

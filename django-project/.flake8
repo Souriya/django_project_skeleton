@@ -3,6 +3,7 @@ exclue =
     migrations,
     __pycache__,
     manage.py,
-    setting.py,
-    configs/setting.py
-    
+    settings.py,
+    ./configs/settings.py,
+    configs/settings.py.
+

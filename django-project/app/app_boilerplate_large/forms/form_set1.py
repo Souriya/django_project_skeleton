@@ -1,10 +1,8 @@
 # coding=utf-8
 from django import forms
-from ..models.model_set1 import *
 
+# from ..models.model_set1 import *
 
-
-# Create your form here
 
 '''
 # model form snipet

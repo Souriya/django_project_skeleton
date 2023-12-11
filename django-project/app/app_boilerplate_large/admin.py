@@ -1,11 +1,8 @@
 # coding=utf-8
 from django.contrib import admin
 
-from .models.model_set1 import *
+# from .models.model_set1 import *
 
-
-
-# Register your models here.
 
 '''
 # snipet

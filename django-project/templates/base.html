@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %} {{ title }} {% endblock %}</title>
+
+        <!-- CSS libs-->
+        <link href="{% static "css/w3/w3.css" %}" rel="stylesheet">
+        <link href="{% static "css/w3/w3-theme-blue.css" %}" rel="stylesheet">
+        <!-- Font libs-->
+        <link href="{% static "fonts/fontawesome-free-6/css/all.min.css" %}" rel="stylesheet">
+        <link href="{% static "fonts/lao/lao-font.css" %}" rel="stylesheet">
+        <!-- Custom CSS -->
+        <link href="{% static "css/custom.css" %}" rel="stylesheet">
+
+        <!-- additional CSS -->
+        {% block css %}
+        <style>
+        </style>
+        {% endblock %}
+    </head>
+    <body>
+        <body>
+            <!-- Navigation -->
+            {% block navigation %}
+            {% endblock %}
+
+            <!-- Main content of the page -->
+            {% block main-content %}
+            {% endblock %}
+    
+            <!-- page footer -->
+            {% block footer %}
+            {% endblock %}
+    
+            <!-- Main JS libs -->
+            <script src="{% static "js/w3.js" %}"></script>
+            <script src="{% static "js/jquery-3.7.1.min.js" %}"></script>
+    
+            <!-- additional JS libs -->
+            {% block js %}
+            {% endblock %}
+    </body>
+</html>

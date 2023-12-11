@@ -39,6 +39,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.postgres',
+    
+    # 3rd apps
+    'rest_framework',
+    'drf_spectacular',
+    'drf_spectacular_sidecar',
+    
+    # custom apps
+    'app.app_test',
+
 ]
 
 MIDDLEWARE = [
@@ -56,7 +65,7 @@ ROOT_URLCONF = 'configs.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -77,19 +86,20 @@ WSGI_APPLICATION = 'configs.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db', 'db.sqlite3'),
-    },
-    'postgres': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': '',
-        'USER': 'dboperator',
-        'PASSWORD': 'dboperator',
-        'HOST': '',
+        'HOST': os.environ.get('DB_HOST'),
+        'NAME': os.environ.get('POSTGRES_DB'),
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
         'PORT': '5432',
         'OPTIONS': {
-            'options': '-c search_path=public,fees',
+            # tell django to use additional schema
+            #'options': '-c search_path=public,fees', 
         }
+    },
+    'sqlite': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db', 'db.sqlite3'),
     },
 }
 
@@ -136,7 +146,59 @@ DEFAULT_CHARSET = 'utf-8'
 
 STATIC_URL = 'static/'
 
+STATICFILES_DIRS = [
+    # os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "templates", "assets"),
+    os.path.join(BASE_DIR, "app", "app_test", "templates", "assets"),
+]
+
+# base URL to serve media file uploaded by users
+MEDIA_URL = '/media/'
+
+# folder to store media file uploaded by users
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# URL to redirect after login  if the contrib.auth.views.login view gets no
+# next parameter
+# LOGIN_REDIRECT_URL = reverse_lazy('identity:profile_user')
+
+# URL to redirect the user to login page
+# LOGIN_URL = reverse_lazy('identity:login')
+
+# URL to redirect the user to logout page
+# LOGOUT_URL = reverse_lazy('identity:logout')
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 20,
+}
+
+SPECTACULAR_SETTING = {
+    'TITLE': 'API',
+    'DESCRIPTION': 'API',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'SWAGGER_UI_DIST': 'SIDECAR',
+    'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
+    'REDOC_DIST': 'SIDECAR',
+}
+
+
+# django core email backend for development use, it sends email to console
+# so during development we don't need to setup real email system to see sample
+# email
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# This setting use external email server to send email, to use it,
+# disable the 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'xxx@gmail.com'
+# EMAIL_HOST_PASSWORD = 'xxx'

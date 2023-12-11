@@ -8,6 +8,7 @@ sudo docker-compose down --volumes
 
 sudo docker-compose run --rm django-app sh -c "django-admin startproject configs ."
 sudo docker-compose run --rm django-app sh -c "flake8"
+sudo docker-compose run --rm django-app sh -c "python3 manage.py startapp apps.app_boilerplate"
 
 
 git add .

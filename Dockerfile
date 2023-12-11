@@ -20,6 +20,9 @@ EXPOSE 8000
 # Set valuable to be use to determine Development or Production
 ARG DEV=false
 
+# Set the DEBIAN_FRONTEND environment variable to noninteractive
+ENV DEBIAN_FRONTEND noninteractive
+
 # Update system
 RUN apt-get update
 RUN apt-get install -y apt-utils
@@ -42,7 +45,11 @@ RUN /venv/bin/pip install --upgrade pip
 # Install requirements 
 RUN /venv/bin/pip install -r /tmp/production.txt
 
-# Install dev requirements if DEV is true
+# Install django-filter lib expicitly, due to container
+# having some issues when install this lib using requirements file
+RUN /venv/bin/pip install django-filter 
+
+# Install dev requirements if DEV is true, set this value in compose file
 RUN if [ $DEV = "true" ]; then /venv/bin/pip install -r /tmp/development.txt; fi
 
 # Remove temporary files

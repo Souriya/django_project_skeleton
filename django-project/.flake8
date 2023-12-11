@@ -7,3 +7,4 @@ exclude =
     configs/settings.py,
     ./configs/settings.py,
 
+ignore = F401

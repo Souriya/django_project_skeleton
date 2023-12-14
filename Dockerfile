@@ -46,8 +46,8 @@ RUN /venv/bin/pip install --upgrade pip
 RUN /venv/bin/pip install -r /tmp/production.txt
 
 # Install django-filter lib expicitly, due to container
-# having some issues when install this lib using requirements file
-RUN /venv/bin/pip install django-filter 
+# if having issues when install this lib using requirements file
+# RUN /venv/bin/pip install django-filter 
 
 # Install dev requirements if DEV is true, set this value in compose file
 RUN if [ $DEV = "true" ]; then /venv/bin/pip install -r /tmp/development.txt; fi

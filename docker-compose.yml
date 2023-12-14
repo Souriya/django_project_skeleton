@@ -4,7 +4,9 @@ version: "3"
 services:
   django-app: # service name to run the docker file
     build:
-      context: . 
+      context: . # use current directory that running the docker-compose command
+      args:
+        - DEV=true # set DEV to true to install development requirements
     ports:
       - "8000:8000"
     volumes:
@@ -22,9 +24,9 @@ services:
 
   django-app-dev: # service name to run the docker file
     build:
-      context: . # use current directory that running the docker-compose command
+      context: .
       args:
-        - DEV=true # set DEV to true for running development env
+        - DEV=true
     ports:
       - "8001:8001" # map port 8000 on local machine to port 8000 on the container
     volumes:

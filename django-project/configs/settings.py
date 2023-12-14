@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-04p-1al#avxqx*snktubg%hihlx-8$fhm#e@h%+8oznn(t09nt'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'django_filters',
     
     # custom apps
-    'app.app_test',
+    'all_apps.app_test',
 
 ]
 
@@ -59,6 +59,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # 3rd party libs
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'configs.urls'
@@ -147,10 +150,11 @@ DEFAULT_CHARSET = 'utf-8'
 
 STATIC_URL = 'static/'
 
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
 STATICFILES_DIRS = [
-    # os.path.join(BASE_DIR, "static"),
-    os.path.join(BASE_DIR, "templates", "assets"),
-    os.path.join(BASE_DIR, "app", "app_test", "templates", "assets"),
+    # Global static diretory
+    os.path.join(BASE_DIR, "templates", "static"),
 ]
 
 # base URL to serve media file uploaded by users

@@ -7,4 +7,5 @@ exclude =
     configs/settings.py,
     ./configs/settings.py,
 
+# exclude the import but unused check 
 ignore = F401

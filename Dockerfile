@@ -16,7 +16,6 @@ WORKDIR /django-project
 
 # Expose port 8000
 EXPOSE 8000
-EXPOSE 8001
 
 # Set valuable to be use to determine Development or Production
 ARG DEV=false

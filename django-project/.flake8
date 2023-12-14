@@ -6,6 +6,8 @@ exclude =
     settings.py,
     configs/settings.py,
     ./configs/settings.py,
+    configs/settings-dev.py,
+    ./configs/settings-dev.py,
 
 # exclude the import but unused check 
 ignore = F401
